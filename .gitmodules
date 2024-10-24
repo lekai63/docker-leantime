@@ -1,0 +1,4 @@
+[submodule "plugins/ProjectOverview"]
+	path = plugins/ProjectOverview
+	url = https://github.com/lekai63/project-overview.git
+	branch = for_company
