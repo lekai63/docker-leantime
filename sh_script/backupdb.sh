@@ -13,7 +13,7 @@ docker exec -u mysql:mysql mysql mysqldump \
   --column-statistics=0 \
   --no-tablespaces \
   --user=admin \
-  --password=kksqladmin \
+  --password=<your password> \
   --host=mysql leantime \
   --port=3306 \
   --result-file=${DOCKER_BACKUP_DIR}/${BACKUP_FILE}
