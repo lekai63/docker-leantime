@@ -1,0 +1,45 @@
+# 本地开发使用，服务器不需要
+
+services:
+  leantime_db:
+    volumes:
+      - db_data:/var/lib/mysql
+      - db_backup:/var/lib/mysql-backup
+    env_file: ./config/.env # Environment file with settings
+
+  leantime:
+    env_file:
+      - path: ./config/.env # Environment file with settings
+        required: false
+      - path: ./config/.env.override
+        required: false
+    volumes:
+      - public_userfiles:/var/www/html/public/userfiles
+      - userfiles:/var/www/html/userfiles
+      - db_backup:/var/www/html/backupdb
+      - ./plugins:/var/www/html/app/Plugins
+      - ./config/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - logs:/var/www/html/logs
+      # logo映射
+      - ./logo/logo.svg:/var/www/html/public/dist/images/logo.svg:ro
+      - ./logo/logo.png:/var/www/html/public/dist/images/logo.png:ro
+      - ./logo/logo_blue.png:/var/www/html/public/dist/images/logo_blue.png:ro
+      - ./logo/logo_blue.svg:/var/www/html/public/dist/images/logo_blue.svg:ro
+      - ./logo/favicon.png:/var/www/html/public/dist/images/favicon.png:ro
+      # 代码修改
+      - ./code_modify/Menu.php:/var/www/html/app/Domain/Menu/Repositories/Menu.php
+      - ./code_modify/UserInvite.php:/var/www/html/app/Domain/Auth/Controllers/UserInvite.php
+      - ./code_modify/ConsoleKernel.php:/var/www/html/app/Core/Console/ConsoleKernel.php
+      - ./code_modify/zh-CN.ini:/var/www/html/app/Language/zh-CN.ini
+    labels:
+      - dev.orbstack.domains=pmp.orb.local # needed in development with orbstack
+
+  nginx-ui:
+    profiles: ["prod"]
+
+volumes:
+  db_data:
+  db_backup:
+  userfiles:
+  public_userfiles:
+  logs:

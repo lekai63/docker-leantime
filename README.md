@@ -93,6 +93,15 @@ Currently, this is only supported for `LEAN_DB_PASSWORD`, `LEAN_EMAIL_SMTP_PASSW
 
 If you are planning on using and installing plugins from the marketplace please ensure to mount the Plugin folder as suggested in the docker-compose file. Otherwise plugin installation may fail or plugins will disapper after a restart of the container. 
 
+### 使用ProjectOverview模块
+
+```bash
+git clone <本仓库的URL>
+cd <本仓库>
+git checkout code_modify
+git submodule update --init --recursive --remote
+```
+
 ### Support ###
 * Documentation [https://docs.leantime.io](https://docs.leantime.io)
 * Community Forum [https://community.leantime.io](https://community.leantime.io)

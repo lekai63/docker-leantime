@@ -1,39 +1,74 @@
-version: '3.3'
+version: "3.3"
 
 services:
   leantime_db:
-    image: mysql:8.4
-    container_name: mysql_leantime
+    image: mysql:8
+    container_name: mysql
+    ports:
+      - "3306:3306" # 如需直连，需云防火墙放行规则
     volumes:
-      - db_data:/var/lib/mysql
+      - ./data/mysql:/var/lib/mysql
+      - ./data/mysql-backup:/var/lib/mysql-backup
     restart: unless-stopped
-    env_file: ./.env                                        # Environment file with settings
+    env_file:
+      - path: ./data/leantime/config/.env # Environment file with settings
+        required: false
     networks:
       - leantime-net
     command: --character-set-server=UTF8MB4 --collation-server=UTF8MB4_unicode_ci
-
 
   leantime:
     image: leantime/leantime:latest
     container_name: leantime
     restart: unless-stopped
-    env_file: ./.env                                        # Environment file with settings
+    env_file:
+      - path: ./data/leantime/config/.env # Environment file with settings
+        required: false
     networks:
       - leantime-net
     volumes:
-      - public_userfiles:/var/www/html/public/userfiles     # Volume to store public files, logo etc
-      - userfiles:/var/www/html/userfiles                   # Volume to store private user uploaded files
-      - plugins:/var/www/html/app/Plugins                   # Uncomment if you are planning to use plugins from the marketplace
-    ports:
-      - "${LEAN_PORT}:80"                                          # The port to expose and access Leantime
-    depends_on:
-      - leantime_db                                         # Don't start Leantime unless leantime_db is running
+      - ./data/leantime/public_userfiles:/var/www/html/public/userfiles # Volume to store public files, logo etc
+      - ./data/leantime/userfiles:/var/www/html/userfiles # Volume to store private user uploaded files
+      - ./data/leantime/backupdb:/var/www/html/backupdb
+      - ./data/leantime/plugins:/var/www/html/app/Plugins # Uncomment if you are planning to use plugins from the marketplace
+      - ./data/leantime/config/custom.ini:/usr/local/etc/php/conf.d/custom.ini # [Setting upload filesize to > 2MB in docker environment](https://github.com/Leantime/leantime/discussions/952)
+      - ./data/leantime/logs:/var/www/html/logs
+      # logo映射
+      - ./data/leantime/logo/logo.svg:/var/www/html/public/dist/images/logo.svg:ro
+      - ./data/leantime/logo/logo.png:/var/www/html/public/dist/images/logo.png:ro
+      - ./data/leantime/logo/logo_blue.png:/var/www/html/public/dist/images/logo_blue.png:ro
+      - ./data/leantime/logo/logo_blue.svg:/var/www/html/public/dist/images/logo_blue.svg:ro
+      - ./data/leantime/logo/favicon.png:/var/www/html/public/dist/images/favicon.png:ro
+      # 代码修改
+      - ./data/leantime/code_modify/Menu.php:/var/www/html/app/Domain/Menu/Repositories/Menu.php
+      - ./data/leantime/code_modify/UserInvite.php:/var/www/html/app/Domain/Auth/Controllers/UserInvite.php
+      - ./data/leantime/code_modify/ConsoleKernel.php:/var/www/html/app/Core/Console/ConsoleKernel.php
+      - ./data/leantime/code_modify/zh-CN.ini:/var/www/html/app/Language/zh-CN.ini
 
-volumes:
-  db_data:
-  userfiles:
-  public_userfiles:
-  plugins:
+    ports:
+      - "8081:80" # 如需直连，需云防火墙放行规则
+    #      - "${LEAN_PORT}:80" # The port to expose and access Leantime
+    depends_on:
+      - leantime_db # Don't start Leantime unless leantime_db is running
+
+  nginx-ui:
+    image: uozi/nginx-ui:latest
+    container_name: nginx-ui
+    restart: always
+    tty: true
+    stdin_open: true
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./data/nginx:/etc/nginx
+      - ./data/nginx-ui:/etc/nginx-ui
+      - "/var/www:/var/www"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "9000:9000"
+    networks:
+      - leantime-net
 
 networks:
   leantime-net:
