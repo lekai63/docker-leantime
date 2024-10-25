@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="260"
+   height="60"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="logo_blue.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.8538462"
+     inkscape:cx="134.73046"
+     inkscape:cy="30.13477"
+     inkscape:window-width="1328"
+     inkscape:window-height="783"
+     inkscape:window-x="184"
+     inkscape:window-y="38"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g6" />
+  <defs
+     id="defs2">
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#fishnet"
+       id="pattern16"
+       patternTransform="scale(1)" />
+    <linearGradient
+       id="swatch16"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop16" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient7"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop8" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop9" />
+    </linearGradient>
+    <pattern
+       id="fishnet"
+       x="0"
+       y="0"
+       width="5"
+       height="5"
+       patternUnits="userSpaceOnUse"
+       inkscape:label="fishnet">
+      <path
+         d="M0 5 L5 0 M0 0 L5 5"
+         stroke="white"
+         stroke-width="0.6"
+         opacity="1"
+         id="path1" />
+    </pattern>
+    <clipPath
+       id="white-fish-body-clip">
+      <path
+         d="M30,30 A25,25 0 0,0 30,55 A12.5,12.5 0 0,1 30,30 Z"
+         id="path2" />
+    </clipPath>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient7"
+       id="radialGradient9"
+       cx="30"
+       cy="17.5"
+       fx="30"
+       fy="17.5"
+       r="3"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-14)" />
+  </defs>
+  <g
+     transform="translate(50, 0)"
+     id="g6">
+    <!-- 太极阴阳鱼 logo -->
+    <circle
+       cx="16"
+       cy="30"
+       r="25"
+       fill="#FFD700"
+       stroke="black"
+       stroke-width="2"
+       id="circle2"
+       style="fill:#ffe34a;fill-opacity:1;stroke:#000000;stroke-opacity:0" />
+    <path
+       d="M 16,5 A 25,25 0 0 1 16,55 12.5,12.5 0 0 1 16,30 12.5,12.5 0 0 0 16,5"
+       fill="#000000"
+       id="path3"
+       style="fill:#6b6b6b;fill-opacity:1" />
+    <rect
+       x="5"
+       y="5"
+       width="50"
+       height="50"
+       fill="url(#fishnet)"
+       clip-path="url(#white-fish-body-clip)"
+       id="rect3"
+       transform="rotate(25.034187,34.19798,-15.283077)"
+       style="fill:url(#pattern16);fill-opacity:1;stroke:none"
+       inkscape:transform-center-x="-9.5955522"
+       inkscape:transform-center-y="-10.037731" />
+    <circle
+       cx="16"
+       cy="17.5"
+       r="5"
+       fill="black"
+       id="circle3"
+       style="fill:#ffffff" />
+    <circle
+       cx="16"
+       cy="42.5"
+       r="5"
+       fill="#ffffff"
+       id="circle4" />
+    <!-- 小圆点 -->
+    <circle
+       cx="16"
+       cy="17.5"
+       r="2.5"
+       fill="#FFD700"
+       id="circle5"
+       style="fill:#ffd700;fill-opacity:0.401338;stroke:url(#radialGradient9);stroke-opacity:1" />
+    <circle
+       cx="16"
+       cy="42.5"
+       r="2.5"
+       fill="black"
+       id="circle6"
+       style="fill:#ffffff" />
+    <!-- 文字 "同协共赢"，大海的蓝色 -->
+    <text
+       x="56"
+       y="40"
+       font-family="'roboto', 'Helvetica Neue', Helvetica, sans-serif"
+       font-size="28px"
+       fill="white"
+       id="text6"
+       style="fill:white">同协共赢</text>
+  </g>
+</svg>

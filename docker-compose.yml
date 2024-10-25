@@ -44,6 +44,8 @@ services:
       - ./data/leantime/code_modify/UserInvite.php:/var/www/html/app/Domain/Auth/Controllers/UserInvite.php
       - ./data/leantime/code_modify/ConsoleKernel.php:/var/www/html/app/Core/Console/ConsoleKernel.php
       - ./data/leantime/code_modify/zh-CN.ini:/var/www/html/app/Language/zh-CN.ini
+      - ./data/leantime/code_modify/project-overview.css:/var/www/html/public/dist/css/project-overview.css:ro
+      - ./data/leantime/code_modify/project-overview.js:/var/www/html/public/dist/js/project-overview.js:ro
 
     ports:
       - "8081:80" # 如需直连，需云防火墙放行规则
