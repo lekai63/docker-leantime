@@ -16,6 +16,11 @@ services:
     networks:
       - leantime-net
     command: --character-set-server=UTF8MB4 --collation-server=UTF8MB4_unicode_ci
+    healthcheck:
+      test: ["CMD", "php-fpm", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   leantime:
     image: leantime/leantime:latest
@@ -32,7 +37,7 @@ services:
       - ./data/leantime/backupdb:/var/www/html/backupdb
       - ./data/leantime/plugins:/var/www/html/app/Plugins # Uncomment if you are planning to use plugins from the marketplace
       - ./data/leantime/config/custom.ini:/usr/local/etc/php/conf.d/custom.ini # [Setting upload filesize to > 2MB in docker environment](https://github.com/Leantime/leantime/discussions/952)
-      - ./data/leantime/logs:/var/www/html/logs
+      - ./data/logs/php-fpm:/var/log/php-fpm
       # logo映射
       - ./data/leantime/logo/logo.svg:/var/www/html/public/dist/images/logo.svg:ro
       - ./data/leantime/logo/logo.png:/var/www/html/public/dist/images/logo.png:ro

@@ -19,7 +19,7 @@ services:
       - db_backup:/var/www/html/backupdb
       - ./plugins:/var/www/html/app/Plugins
       - ./config/custom.ini:/usr/local/etc/php/conf.d/custom.ini
-      - logs:/var/www/html/logs
+      - logs:/var/log/php-fpm
       # logo映射
       - ./logo/logo.svg:/var/www/html/public/dist/images/logo.svg:ro
       - ./logo/logo.png:/var/www/html/public/dist/images/logo.png:ro
