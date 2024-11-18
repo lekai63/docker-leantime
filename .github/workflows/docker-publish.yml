@@ -24,4 +24,8 @@ jobs:
 
       - name: Build & Push
         run: |
-          docker buildx build --file Dockerfile --platform linux/amd64,linux/arm64,linux/arm/v8 --output "type=image,push=true" --tag lekai63/leantime:${{ github.event.inputs.tag }} .
+          docker buildx build --file Dockerfile \
+            --platform linux/amd64,linux/arm64,linux/arm/v8 \
+            --output "type=image,push=true" \
+            --tag lekai63/leantime:${{ github.event.inputs.tag }} \
+            --tag lekai63/leantime:latest .
