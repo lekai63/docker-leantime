@@ -56,7 +56,8 @@ RUN curl -sL https://github.com/Leantime/leantime/releases/download/v${LEAN_VERS
     --verbose \
     --strip-components 1
 
-RUN chown www-data:www-data -R .
+RUN RUN mkdir -p /var/log/php-fpm && \
+    chown -R www-data:www-data /var/log/php-fpm && chown www-data:www-data -R .
 
 COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
@@ -65,3 +66,5 @@ COPY config/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+COPY config/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
