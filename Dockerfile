@@ -56,7 +56,7 @@ RUN curl -sL https://github.com/Leantime/leantime/releases/download/v${LEAN_VERS
     --verbose \
     --strip-components 1
 
-RUN RUN mkdir -p /var/log/php-fpm && \
+RUN mkdir -p /var/log/php-fpm && \
     chown -R www-data:www-data /var/log/php-fpm && chown www-data:www-data -R .
 
 COPY ./start.sh /start.sh
