@@ -58,11 +58,10 @@ RUN curl -sL https://github.com/Leantime/leantime/releases/download/v${LEAN_VERS
     --strip-components 1 && \
     sed -i '/premium/d' app/Domain/Menu/Repositories/Menu.php
 
-RUN curl -sL https://github.com/ITK-Leantime/project-overview/releases/download/${PROJECT_OVERVIEW_VERSION}/ProjectOverview-${PROJECT_OVERVIEW_VERSION}.tar.gz | \
-    tar \
-    --ungzip \
-    --extract \
-    --verbose && \
+RUN wget -O project-overview.tar.gz https://github.com/ITK-Leantime/project-overview/releases/download/${PROJECT_OVERVIEW_VERSION}/ProjectOverview-${PROJECT_OVERVIEW_VERSION}.tar.gz && \
+    ls -l project-overview.tar.gz && \
+    file project-overview.tar.gz && \
+    tar tvf project-overview.tar.gz && \
     sed -i 's/ticket.status <> '\''0'\''/ticket.status > '\''1'\''/' ProjectOverview/Repositories/ProjectOverview.php && \
     sed -i "s/'personal'/'company'/g" ProjectOverview/register.php && \
     bin/leantime plugin:install ProjectOverview && \
