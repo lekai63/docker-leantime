@@ -74,6 +74,8 @@ RUN curl -sL https://github.com/ITK-Leantime/project-overview/releases/download/
 # 放入自己增补的汉化文件
 COPY code_modify/zh-CN.ini app/Language/zh-CN.ini
 
+COPY logo/* public/dist/images/
+
 RUN mkdir -p /var/log/php-fpm && \
     chown -R www-data:www-data /var/log/php-fpm && chown www-data:www-data -R .
 
