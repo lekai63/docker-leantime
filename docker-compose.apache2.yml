@@ -23,8 +23,7 @@ services:
       retries: 3
 
   leantime:
-    # image: leantime/leantime:latest
-    image: lekai63/leantime:latest
+    image: leantime/leantime:latest
     container_name: leantime
     restart: unless-stopped
     env_file:

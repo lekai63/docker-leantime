@@ -1,0 +1,85 @@
+services:
+  nginx-ui:
+    image: uozi/nginx-ui:latest
+    container_name: nginx-ui
+    restart: always
+    tty: true
+    stdin_open: true
+    environment:
+      - TZ=Asia/Shanghai
+      # 预定义用户
+      - NGINX_UI_PREDEFINED_USER_NAME=lekai
+      - NGINX_UI_PREDEFINED_USER_PASSWORD="032003@lekai"
+    volumes:
+      - ./data/nginx:/etc/nginx
+      - ./data/nginx-ui:/etc/nginx-ui
+      - ./data/www/static:/var/www/static
+      - leantime_www:/var/www/html:ro # 使用leantime_public命名卷,映射路径需与leantime一致。否则传递给php-fpm的SCRIPT_FILENAME可能不正确
+    ports:
+      - "80:80"
+      - "443:443"
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    # ports:
+    #     - "3306:3306" # 如需直连，需云防火墙放行规则
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./data/mysql-backup:/var/lib/mysql-backup
+    restart: unless-stopped
+    env_file:
+      - path: ./data/leantime/config/.env # Environment file with settings
+        required: false
+    command: --character-set-server=UTF8MB4 --collation-server=UTF8MB4_unicode_ci
+    healthcheck:
+      test: ["CMD", "php-fpm", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - docker_default # 用于与nginx通信
+
+  leantime:
+    # image: leantime/leantime:latest
+    image: lekai63/leantime:latest
+    container_name: leantime
+    restart: unless-stopped
+    env_file:
+      - path: ./data/leantime/config/.env # Environment file with settings
+        required: false
+    networks:
+      - docker_default # 用于与nginx通信
+    volumes:
+      # 共享 nginx-ui 下的/var/www/html,php-fpm需要访问
+      - leantime_www:/var/www/html/ # 将html目录映射到命名卷
+      - ./data/www/leantime/public_userfiles:/var/www/html/public/userfiles # Volume to store public files, logo etc
+      - ./data/www/leantime/userfiles:/var/www/html/userfiles # Volume to store private user uploaded files
+      - ./data/www/leantime/backupdb:/var/www/html/backupdb
+      - leantime_plugins:/var/www/html/app/Plugins # Uncomment if you are planning to use plugins from the marketplace
+      # 配置
+      - ./data/leantime/config/custom.ini:/usr/local/etc/php/conf.d/custom.ini # [Setting upload filesize to > 2MB in docker environment](https://github.com/Leantime/leantime/discussions/952)
+      - ./data/leantime/logs/php-fpm:/var/log/php-fpm
+
+      # 代码修改
+      - ./data/leantime/config/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      # - ./data/leantime/code_modify/UserInvite.php:/var/www/html/app/Domain/Auth/Controllers/UserInvite.php
+
+      # - ./data/leantime/code_modify/project-overview.css:/var/www/html/public/dist/css/project-overview.css:ro
+      # - ./data/leantime/code_modify/project-overview.js:/var/www/html/public/dist/js/project-overview.js:ro
+
+    # ports:
+    #     - "8081:80" # 如需直连，需云防火墙放行规则
+    #      - "${LEAN_PORT}:80" # The port to expose and access Leantime
+    depends_on:
+      - mysql # Don't start Leantime unless leantime_db is running
+networks:
+  docker_default:
+    external: true # 使用现有的默认bridge网络
+    name: docker_default
+
+volumes:
+  leantime_www: # 定义一个命名卷
+    name: leantime_www
+  leantime_plugins:
+    name: leantime_plugins
