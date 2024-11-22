@@ -58,7 +58,8 @@ RUN curl -sL https://github.com/Leantime/leantime/releases/download/v${LEAN_VERS
     --strip-components 1 && \
     sed -i '/premium/d' app/Domain/Menu/Repositories/Menu.php
 
-RUN wget -O project-overview.tar.gz https://github.com/ITK-Leantime/project-overview/releases/download/${PROJECT_OVERVIEW_VERSION}/ProjectOverview-${PROJECT_OVERVIEW_VERSION}.tar.gz && \
+RUN curl -L -o project-overview.tar.gz https://github.com/ITK-Leantime/project-overview/releases/download/${PROJECT_OVERVIEW_VERSION}/ProjectOverview-${PROJECT_OVERVIEW_VERSION}.tar.gz && \
+    if [ ! -s project-overview.tar.gz ]; then echo "下载失败"; exit 1; fi && \
     tar xzf project-overview.tar.gz && \
     rm project-overview.tar.gz && \
     sed -i 's/ticket.status <> '\''0'\''/ticket.status > '\''1'\''/' ProjectOverview/Repositories/ProjectOverview.php && \
