@@ -59,8 +59,7 @@ RUN curl -sL https://github.com/Leantime/leantime/releases/download/v${LEAN_VERS
     sed -i '/premium/d' app/Domain/Menu/Repositories/Menu.php
 
 RUN curl -L -o project-overview.tar.gz https://github.com/ITK-Leantime/project-overview/releases/download/${PROJECT_OVERVIEW_VERSION}/ProjectOverview-${PROJECT_OVERVIEW_VERSION}.tar.gz && \
-    if [ ! -s project-overview.tar.gz ]; then echo "下载失败"; exit 1; fi && \
-    tar xzf project-overview.tar.gz && \
+    tar -xf project-overview.tar.gz && \
     rm project-overview.tar.gz && \
     sed -i 's/ticket.status <> '\''0'\''/ticket.status > '\''1'\''/' ProjectOverview/Repositories/ProjectOverview.php && \
     sed -i "s/'personal'/'company'/g" ProjectOverview/register.php && \
@@ -69,6 +68,7 @@ RUN curl -L -o project-overview.tar.gz https://github.com/ITK-Leantime/project-o
 
 #  上面的命令解释：ticket.status <> '0' 调整为 ticket.status > '1'，因为“已归档”是-1，已完成是 0，“已取消”（block）是 1
 # 'personal' 改为'company' 是为了把菜单放在“公司”选项卡下
+# project-overview.tar.gz 根本不是gzip格式,不使用-z参数
 
 # 放入自己增补的汉化文件
 COPY code_modify/zh-CN.ini app/Language/zh-CN.ini
