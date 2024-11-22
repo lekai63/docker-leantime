@@ -63,6 +63,7 @@ RUN curl -L -o project-overview.tar.gz https://github.com/ITK-Leantime/project-o
     rm project-overview.tar.gz && \
     sed -i 's/ticket.status <> '\''0'\''/ticket.status > '\''1'\''/' ProjectOverview/Repositories/ProjectOverview.php && \
     sed -i "s/'personal'/'company'/g" ProjectOverview/register.php && \
+    mv ProjectOverview app/Plugins/ && \
     bin/leantime plugin:install ProjectOverview && \
     bin/leantime plugin:enable ProjectOverview
 
