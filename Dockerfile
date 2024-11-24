@@ -79,7 +79,7 @@ RUN mkdir -p /var/log/php-fpm && \
 COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
 
-COPY ./config_modif/custom.ini /usr/local/etc/php/conf.d/custom.ini
+COPY ./config_modify/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Configure supervisord
 COPY ./config_modif/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
