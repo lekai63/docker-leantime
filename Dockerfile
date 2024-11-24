@@ -55,8 +55,9 @@ RUN curl -sL https://github.com/Leantime/leantime/releases/download/v${LEAN_VERS
     mv ./ProjectOverview ./app/Plugins/ProjectOverview
 
 # 复制资源文件
-COPY ./app/Plugins/ProjectOverview/dist/css/project-overview.css ./public/dist/css/project-overview.css
-COPY ./app/Plugins/ProjectOverview/dist/js/project-overview.js ./public/dist/js/project-overview.js
+RUN cp ./app/Plugins/ProjectOverview/dist/css/project-overview.css ./public/dist/css/ && \
+    cp ./app/Plugins/ProjectOverview/dist/js/project-overview.js ./public/dist/js/
+
 COPY ./code_modify/ProjectOverview/zh-CN.ini ./app/Plugins/ProjectOverview/Language/
 COPY ./code_modify/zh-CN.ini ./app/Language/
 COPY ./logo/* ./public/dist/images/

@@ -73,8 +73,8 @@ RUN curl -L -o project-overview.tar.gz https://github.com/ITK-Leantime/project-o
 # project-overview.tar.gz 根本不是gzip格式,不使用-z参数
 
 # 复制一份插件的css和js文件到public/dist/css和public/dist/js 以防重启docker后丢失
-COPY ./app/Plugins/ProjectOverview/dist/css/project-overview.css ./public/dist/css/project-overview.css
-COPY ./app/Plugins/ProjectOverview/dist/js/project-overview.js ./public/dist/js/project-overview.js
+RUN cp ./app/Plugins/ProjectOverview/dist/css/project-overview.css ./public/dist/css/ && \
+    cp ./app/Plugins/ProjectOverview/dist/js/project-overview.js ./public/dist/js/
 
 
 # 放入自己增补的汉化文件
