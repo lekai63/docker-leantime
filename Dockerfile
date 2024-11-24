@@ -82,6 +82,6 @@ RUN chmod +x /start.sh
 COPY ./config_modify/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Configure supervisord
-COPY ./config_modif/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./config_modify/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY ./config_modify/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
