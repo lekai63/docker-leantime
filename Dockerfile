@@ -64,6 +64,7 @@ RUN curl -L -o project-overview.tar.gz https://github.com/ITK-Leantime/project-o
     rm project-overview.tar.gz && \
     sed -i 's/ticket.status <> '\''0'\''/ticket.status > '\''1'\''/' ./ProjectOverview/Repositories/ProjectOverview.php && \
     sed -i "s/'personal'/'company'/g" ./ProjectOverview/register.php && \
+    sed -i 's#use Leantime\\Core\\Template;#use Leantime\\Core\\UI\\Template;#' ./ProjectOverview/Controllers/ProjectOverview.php && \
     mv ./ProjectOverview ./app/Plugins/ProjectOverview
 
 #  上面的命令解释：ticket.status <> '0' 调整为 ticket.status > '1'，因为“已归档”是-1，已完成是 0，“已取消”（block）是 1
