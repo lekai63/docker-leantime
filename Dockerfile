@@ -61,7 +61,7 @@ RUN curl -sL https://github.com/Leantime/leantime/releases/download/v${LEAN_VERS
 
 RUN curl -L -o project-overview.tar.gz https://github.com/ITK-Leantime/project-overview/releases/download/${PROJECT_OVERVIEW_VERSION}/ProjectOverview-${PROJECT_OVERVIEW_VERSION}.tar.gz && \
     tar -xf project-overview.tar.gz && \
-    # rm project-overview.tar.gz && \
+    rm project-overview.tar.gz && \
     sed -i 's/ticket.status <> '\''0'\''/ticket.status > '\''1'\''/' ./ProjectOverview/Repositories/ProjectOverview.php && \
     sed -i "s/'personal'/'company'/g" ./ProjectOverview/register.php && \
     mv ./ProjectOverview ./app/Plugins/ProjectOverview
@@ -72,6 +72,7 @@ RUN curl -L -o project-overview.tar.gz https://github.com/ITK-Leantime/project-o
 
 # 放入自己增补的汉化文件
 COPY ./code_modify/zh-CN.ini ./app/Language/zh-CN.ini
+COPY ./code_modify/ProjectOverview/zh-CN.ini ./app/Plugins/ProjectOverview/Language/zh-CN.ini
 
 COPY ./logo/* ./public/dist/images/
 
