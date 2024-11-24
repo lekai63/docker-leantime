@@ -56,23 +56,23 @@ RUN curl -sL https://github.com/Leantime/leantime/releases/download/v${LEAN_VERS
     --extract \
     --verbose \
     --strip-components 1 && \
-    sed -i '/premium/d' app/Domain/Menu/Repositories/Menu.php
+    sed -i '/premium/d' ./app/Domain/Menu/Repositories/Menu.php
 
 RUN curl -L -o project-overview.tar.gz https://github.com/ITK-Leantime/project-overview/releases/download/${PROJECT_OVERVIEW_VERSION}/ProjectOverview-${PROJECT_OVERVIEW_VERSION}.tar.gz && \
     tar -xf project-overview.tar.gz && \
-    rm project-overview.tar.gz && \
-    sed -i 's/ticket.status <> '\''0'\''/ticket.status > '\''1'\''/' ProjectOverview/Repositories/ProjectOverview.php && \
-    sed -i "s/'personal'/'company'/g" ProjectOverview/register.php && \
-    mv ProjectOverview app/Plugins/
+    # rm project-overview.tar.gz && \
+    sed -i 's/ticket.status <> '\''0'\''/ticket.status > '\''1'\''/' ./ProjectOverview/Repositories/ProjectOverview.php && \
+    sed -i "s/'personal'/'company'/g" ./ProjectOverview/register.php && \
+    mv ./ProjectOverview ./app/Plugins/ProjectOverview
 
 #  上面的命令解释：ticket.status <> '0' 调整为 ticket.status > '1'，因为“已归档”是-1，已完成是 0，“已取消”（block）是 1
 # 'personal' 改为'company' 是为了把菜单放在“公司”选项卡下
 # project-overview.tar.gz 根本不是gzip格式,不使用-z参数
 
 # 放入自己增补的汉化文件
-COPY code_modify/zh-CN.ini app/Language/zh-CN.ini
+COPY ./code_modify/zh-CN.ini ./app/Language/zh-CN.ini
 
-COPY logo/* public/dist/images/
+COPY ./logo/* ./public/dist/images/
 
 RUN mkdir -p /var/log/php-fpm && \
     chown -R www-data:www-data /var/log/php-fpm && chown www-data:www-data -R .
@@ -80,9 +80,9 @@ RUN mkdir -p /var/log/php-fpm && \
 COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
 
-COPY config_modif/custom.ini /usr/local/etc/php/conf.d/custom.ini
+COPY ./config_modif/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Configure supervisord
-COPY config_modif/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./config_modif/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-COPY config_modify/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./config_modify/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
