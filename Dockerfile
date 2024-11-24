@@ -9,6 +9,8 @@ FROM docker.io/library/php:8.3-fpm-alpine
 # Change version to trigger build
 ARG LEAN_VERSION=3.3.2
 
+ARG PROJECT_OVERVIEW_VERSION=2.1.5
+
 WORKDIR /var/www/html
 
 ENTRYPOINT ["/start.sh"]
