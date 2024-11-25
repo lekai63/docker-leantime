@@ -71,5 +71,5 @@ RUN mkdir -p /var/log/php-fpm && \
     chown www-data:www-data -R . && \
     chmod +x /start.sh
 
-EXPOSE 80
+EXPOSE 9000
 ENTRYPOINT ["/start.sh"]

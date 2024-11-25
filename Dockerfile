@@ -14,7 +14,7 @@ ARG PROJECT_OVERVIEW_VERSION=2.1.5
 WORKDIR /var/www/html
 
 ENTRYPOINT ["/start.sh"]
-EXPOSE 80
+EXPOSE 9000
 
 ########################
 #### IMPLEMENTATION ####
